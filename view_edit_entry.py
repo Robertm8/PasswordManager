@@ -14,6 +14,7 @@ def initialize(window, website):
     results = c.fetchall()
     print(results)
 
+    # Nested functions
     def delete_click():
         selected = clicked.get()
         entry = None
@@ -29,7 +30,24 @@ def initialize(window, website):
         """)
         conn.commit()
 
-    # Nested functions
+    def copy_username():
+        """
+        Copies username to the clipboard.
+        :return: None
+        """
+        selected = clicked.get()
+        window.clipboard_clear()
+        window.clipboard_append(selected)
+
+    def copy_password():
+        """
+        Copies password to the clipboard.
+        :return: None
+        """
+        selected = password_entry.get()
+        window.clipboard_clear()
+        window.clipboard_append(selected)
+
     def update_password_field(click):
         """
         Updates the password field upon selecting a username. Returns first match it finds.
@@ -57,8 +75,8 @@ def initialize(window, website):
     # password_entry.insert(0, clicked)
 
     # Button definition
-    copy_username_button = Button(window, text='Copy')
-    copy_password_button = Button(window, text='Copy')
+    copy_username_button = Button(window, text='Copy', command=copy_username)
+    copy_password_button = Button(window, text='Copy', command=copy_password)
     update_button = Button(window, text='Update')
     delete_button = Button(window, text='Delete', command=delete_click)
 
