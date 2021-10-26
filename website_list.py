@@ -1,12 +1,19 @@
 from settings import *
 import new_website
+import view_edit_entry
 
-def create_new_window(window):
+def create_new_window(window, website=None):
     if window == 'new':
+        print(website)
         new_window = Toplevel()
         new_window.geometry('200x200')
         new_website.initialize(new_window)
-
+    elif window == 'edit':
+        if website == '':
+            return
+        new_window = Toplevel()
+        new_window.geometry('200x200')
+        view_edit_entry.initialize(new_window, website)
 
 def initialize(root):
     """
@@ -14,6 +21,12 @@ def initialize(root):
     :param root: master frame
     :return: None
     """
+    # DB Connection
+    c.execute("SELECT url FROM websites GROUP BY url")
+    results = c.fetchall()
+    results = [url[0] for url in results]
+    print(results)
+
     # Frame definitions
     website_frame = Frame(root)
 
@@ -23,12 +36,14 @@ def initialize(root):
 
     # Listbox definition
     website_list = Listbox(website_frame)
+    for website in results:
+        website_list.insert(END, website)
 
     # Scrollbar definition
     website_scroll = Scrollbar(website_frame, orient=VERTICAL)
 
     # Button definitions
-    view_edit_button = Button(root, text='View/Edit', command=lambda: create_new_window('edit'))
+    view_edit_button = Button(root, text='View/Edit', command=lambda: create_new_window('edit', website_list.get(ANCHOR)))
     new_entry_button = Button(root, text='New Entry', command=lambda: create_new_window('new'))
 
     # Configs
@@ -46,17 +61,11 @@ def initialize(root):
     website_list.grid(row=1, column=0)
     website_scroll.grid(row=0, column=1, rowspan=2, sticky=N+S)
 
-    # Fill with sample data
-    websites = ['www.gmail.com', 'www.youtube.com', 'www.facebook.com', 'www.instagram.com', 'www.reddit.com',
-                'www.github.com', 'www.oregonstate.edu', 'www.espn.com', 'www.amazon.com', 'www.pintrest.com',
-                'www.pastebin.com', 'www.zoom.us', 'www.yahoo.com', 'www.bing.com']
-    for website in websites:
-        website_list.insert(END, website)
-
+    # Temporary button
     def query():
-        c.execute("SELECT * FROM websites")
+        c.execute("SELECT url, websites.username, password FROM websites, passwords WHERE websites.username = passwords.username")
         records = c.fetchall()
         print(records)
-    # Temporary button
+
     b1 = Button(root, text='Pull Data', command=query)
     b1.grid(row=3, column=0)

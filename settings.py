@@ -24,4 +24,4 @@ c = conn.cursor()
 # )
 # """)
 
-# c.execute("ALTER TABLE websites RENAME COLUMN username_id to username")
+# c.execute("ALTER TABLE username_password RENAME to passwords")

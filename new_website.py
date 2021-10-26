@@ -6,7 +6,7 @@ def save_click(window, website, username, password):
     :return: None
     """
     c.execute("INSERT INTO websites (url, username) VALUES ('"+website+"', '"+username+"');")
-    c.execute("INSERT INTO username_password (username, password) VALUES ('"+username+"', '"+password+"');")
+    c.execute("INSERT INTO passwords (username, password) VALUES ('"+username+"', '"+password+"');")
     conn.commit()
     save_message = messagebox.showinfo('Save', 'Username / Password Saved!', parent=window)
 
