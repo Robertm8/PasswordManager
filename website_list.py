@@ -22,7 +22,7 @@ def initialize(root):
     :return: None
     """
     # DB Connection
-    c.execute("SELECT url FROM websites GROUP BY url")
+    c.execute("SELECT url FROM data GROUP BY url")
     results = c.fetchall()
     results = [url[0] for url in results]
     print(results)
@@ -63,7 +63,7 @@ def initialize(root):
 
     # Temporary button
     def query():
-        c.execute("SELECT url, websites.username, password FROM websites, passwords WHERE websites.username = passwords.username")
+        c.execute("SELECT * FROM data")
         records = c.fetchall()
         print(records)
 

@@ -18,10 +18,11 @@ c = conn.cursor()
 # """)
 #
 # c.execute("""
-# CREATE TABLE websites (
+# CREATE TABLE data (
 # url text,
-# username_id int
+# username_id text,
+# password text
 # )
 # """)
 
-# c.execute("ALTER TABLE username_password RENAME to passwords")
+# c.execute("ALTER TABLE data RENAME username_id TO username")

@@ -7,15 +7,15 @@ def initialize(window, website):
     :return: None
     """
     # Fetch database entries
-    c.execute("""
-        SELECT url, websites.username, password FROM websites, passwords WHERE websites.username = passwords.username
-        AND websites.url = '"""+website+"""'
-        """)
+    c.execute("SELECT url, username, password FROM data where url = '" + website + "'")
     results = c.fetchall()
     print(results)
 
     # Nested functions
     def delete_click():
+        answer = messagebox.askyesno('Delete', 'Are you sure you want to delete?', parent=window)
+        if not answer:
+            return
         selected = clicked.get()
         entry = None
         for element in results:
@@ -23,11 +23,8 @@ def initialize(window, website):
                 entry = element
                 break
         c.execute("""
-        DELETE FROM websites WHERE url = '""" + entry[0] + """' AND username = '""" + entry[1] + """'
-        """)
-        c.execute("""
-        DELETE FROM passwords WHERE password = '""" + entry[2] + """' AND username = '""" + entry[1] + """'
-        """)
+        DELETE FROM data WHERE url = '""" + entry[0] + """' 
+        AND username = '""" + entry[1] + """'""")
         conn.commit()
 
     def copy_username():
@@ -60,6 +57,14 @@ def initialize(window, website):
                 password_entry.insert(0, element[2])
                 break
 
+    def update_password():
+        selected = clicked.get()
+        new_password = password_entry.get()
+        print(new_password)
+        c.execute("""UPDATE data SET password = '""" + new_password + """' 
+        WHERE url = '""" + website +"""' AND username = '""" + selected + """'""")
+        conn.commit()
+
     # Label definitions
     username = Label(window, text='Username:')
     password = Label(window, text='Password:')
@@ -77,7 +82,7 @@ def initialize(window, website):
     # Button definition
     copy_username_button = Button(window, text='Copy', command=copy_username)
     copy_password_button = Button(window, text='Copy', command=copy_password)
-    update_button = Button(window, text='Update')
+    update_button = Button(window, text='Update', command=update_password)
     delete_button = Button(window, text='Delete', command=delete_click)
 
     # Configs
