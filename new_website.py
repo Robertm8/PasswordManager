@@ -1,11 +1,15 @@
 from settings import *
 
-def save_click(window):
+def save_click(window, website, username, password):
     """
     What happens when you click the save button.
     :return: None
     """
+    c.execute("INSERT INTO websites (url, username) VALUES ('"+website+"', '"+username+"');")
+    c.execute("INSERT INTO username_password (username, password) VALUES ('"+username+"', '"+password+"');")
+    conn.commit()
     save_message = messagebox.showinfo('Save', 'Username / Password Saved!', parent=window)
+
 
 
 def initialize(window):
@@ -25,7 +29,8 @@ def initialize(window):
     password_entry = Entry(window)
 
     # Button definition
-    save_button = Button(window, text='Save', command=lambda: save_click(window))
+    save_button = Button(window, text='Save', command=lambda: save_click(window, website_entry.get(),
+                                                                         username_entry.get(), password_entry.get()))
 
     # Configs
 

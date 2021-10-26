@@ -23,3 +23,5 @@ c = conn.cursor()
 # username_id int
 # )
 # """)
+
+# c.execute("ALTER TABLE websites RENAME COLUMN username_id to username")

@@ -52,3 +52,11 @@ def initialize(root):
                 'www.pastebin.com', 'www.zoom.us', 'www.yahoo.com', 'www.bing.com']
     for website in websites:
         website_list.insert(END, website)
+
+    def query():
+        c.execute("SELECT * FROM websites")
+        records = c.fetchall()
+        print(records)
+    # Temporary button
+    b1 = Button(root, text='Pull Data', command=query)
+    b1.grid(row=3, column=0)
