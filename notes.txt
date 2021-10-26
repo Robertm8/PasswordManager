@@ -1,0 +1,106 @@
+Helpful things to remember
+
+If wanting to quit with function call instead of X button, use root.quit()
+
+Pack system:
+arguments can use:
+side=RIGHT
+fill=Y
+
+Grid System:
+Place items in grid with .grid(row=x, column=y)
+Can use columnspan to stretch across multiple columns like .grid(..., columnspawn=3)
+.grid_forget() can be used somehow to clear out what is currently in a grid position
+When placing item in grid, can use sticky to stick element to a side of the grid. Can cause it to stretch.
+Example: .grid(..., sticky=W+E)
+If that doesn't work, you can use anchor to move the text in label...
+
+Text:
+To make labels: var = Label(location, text='Text')
+Can set a border with bd=x, and a relief such as relief=SUNKEN
+Example: Label(..., bd=1, relief=SUNKEN)
+Anchor allows you to position text in the space (E, W, etc). Label(..., anchor=E)
+
+Buttons:
+To make buttons: var = Button(location, text='Text')
+Can make a button disabled by adding state to button such as Button(..., state=DISABLED)
+Can change a button to be disabled by referring to it with ["state"] = DISABLE such as:
+button_obj["state"] = DISABLED
+Can make normal with state = normal
+padx, pady adds padding with pixel count ie Button(..., padx=50, pady=50)
+
+To make a button run a function: Button(..., command=function_name)
+Notice that there is no '()' on the function call.
+To pass arguments then, you have to use lambda:
+For example, Button(..., command=lambda: function_name(*args))
+
+Input Boxes:
+To make entries (inputs): var = Entry(location)
+width changes size by pixel count ie Entry(..., width=50)
+borderwidth for aesthetic texture: Entry(..., borderwidth=5)
+In order to retrieve the text input, we use var.get(), which returns the entry as a string.
+With e.insert(0, "Some String"), you get default text inside the input box
+Similarly, e.delete(0, END) will clear the box.
+
+Message Box:
+need to import messagebox from tkinter
+format: messagebox.showinfo('Title', 'Message')
+Other types of messageboxes: showwarning, showerror, askquestion, askokcancel, askyesno
+Setting this format to a variable, you can then call the variable to see what they responded with (yes/no)
+
+FRAMES:
+A widget like the others. var = LabelFrame(location, text='Text', padx=5, pady=5)
+
+Creating new windows:
+can create a new window with var = Toplevel()
+to destroy a window, use var.destroy()
+
+Opening files:
+need to import filedialog from tkinter
+root.filename = filedialog.askopenfilename(initialdir='<dir>', title='Select A File', filetypes=( ('png files', '*.png'), ('all files', '*.*') ) )
+This takes the path to the file and stores it in root.filename. Don't have to use root.filename...?
+
+Scrollbars:
+Uses widget "Scale" or widget "Scrollbar"
+example: var = Scale(location, from_=0, to=200)
+example: var = Scrollbar(location, orient=VERTICAL)
+To make it horizontal, must add orient=HORIZONTAL as an argument
+Can retrieve what value the scrollbar is on with var.get()
+Can add a command= argument to call a function as you slide (such as constantly returning the value its at)
+To tell which thing the scrollbar will be attached to, use:
+var.config(command=my_listbox.yview)
+
+Dropdown menus:
+drop = OptionMenu(root, var, 'option1', 'option2', etc.)
+instead of putting in options manually, can use a Python list and passing it as *list_name
+var here must be a tkinter variable, so you set by doing:
+var = StringVar()
+Can set a default variable by doing var.set('string')
+
+List boxes:
+var = Listbox(location)
+Can adjust width with argument width=x
+to add items to the listbox, use var.insert(index, "string") where index is the index on the list we want it
+shouldn't overwrite though, at least not with END for index. END tends to work more how expected for this.
+Can delete with var.delete(ANCHOR), which will delete the item currently selected.
+To delete everything, you would use var.delete(0, END)
+To grab an item for my_label, use my_label.config(text=my_listbox.get(ANCHOR))
+When in a frame with a scrollbar, can use argument yscrollcommand=my_scrollbar.set
+
+
+Using a database with tkinter:
+import sqlite3
+Can connect to (and create if it doesn't exist) by doing
+conn = sqlite3.connect('database_name.db')
+Need to make a cursor instance with:
+c = conn.cursor()
+And we need to commit changes to database with:
+conn.commit()
+And finally close the connection:
+conn.close()
+
+sqlite only has 5 datatypes: text, integer, real, NULL, and blob
+
+When interacting with the database, you must use cursor, and you are likely always executing the command:
+c.execute()
+When sending multiline sqlite commands, use docstrings """ """
