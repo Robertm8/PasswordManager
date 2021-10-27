@@ -1,6 +1,7 @@
 from settings import *
 import new_website
 import view_edit_entry
+import version
 
 def create_new_window(window, website=None):
     if window == 'new':
@@ -12,8 +13,18 @@ def create_new_window(window, website=None):
         if website == '':
             return
         new_window = Toplevel()
-        new_window.geometry('200x200')
+        new_window.geometry('250x150')
         view_edit_entry.initialize(new_window, website)
+    elif window == 'version':
+        new_window = Toplevel()
+        new_window.geometry('200x200')
+        version.initialize(new_window)
+
+
+def fetch_data():
+    c.execute("SELECT url FROM data GROUP BY url")
+    results = c.fetchall()
+    return [url[0] for url in results]
 
 def initialize(root):
     """
@@ -22,10 +33,7 @@ def initialize(root):
     :return: None
     """
     # DB Connection
-    c.execute("SELECT url FROM data GROUP BY url")
-    results = c.fetchall()
-    results = [url[0] for url in results]
-    print(results)
+    results = fetch_data()
 
     # Frame definitions
     website_frame = Frame(root)
@@ -42,16 +50,29 @@ def initialize(root):
     # Scrollbar definition
     website_scroll = Scrollbar(website_frame, orient=VERTICAL)
 
+    # Refresh query for button
+    def query():
+        c.execute("SELECT * FROM data")
+        records = c.fetchall()
+        website_list.delete(0, END)
+        results = fetch_data()
+        for website in results:
+            website_list.insert(END, website)
+        website_list.grid(row=1, column=0)
+        print(records)
+
     # Button definitions
     view_edit_button = Button(root, text='View/Edit', command=lambda: create_new_window('edit', website_list.get(ANCHOR)))
     new_entry_button = Button(root, text='New Entry', command=lambda: create_new_window('new'))
+    refresh_button = Button(root, text='Refresh List', command=query)
+    version_button = Button(root, text='Version Info', command=lambda: create_new_window('version'))
 
     # Configs
     website_list.configure(yscrollcommand=website_scroll.set)  # listbox sends messages to scrollbar
     website_scroll.config(command=website_list.yview)  # scrollbar sends messages to listbox
 
     # Draw frames to window
-    website_frame.grid(row=1, column=0, columnspan=2, rowspan=2)
+    website_frame.grid(row=1, column=0, columnspan=2, rowspan=2, padx=(20, 0))
     # Draw elements to root
     header_label.grid(row=0, column=0, columnspan=3)
     view_edit_button.grid(row=1, column=3)
@@ -60,12 +81,12 @@ def initialize(root):
     select_website_label.grid(row=0, column=0)
     website_list.grid(row=1, column=0)
     website_scroll.grid(row=0, column=1, rowspan=2, sticky=N+S)
+    refresh_button.grid(row=3, column=0)
+    version_button.grid(row=3, column=3)
 
-    # Temporary button
-    def query():
-        c.execute("SELECT * FROM data")
-        records = c.fetchall()
-        print(records)
-
-    b1 = Button(root, text='Pull Data', command=query)
-    b1.grid(row=3, column=0)
+    # Tooltips
+    CreateToolTip(view_edit_button, 'Opens a new window to allow for viewing the usernames associated with the '
+                                    'website, and to copy/edit the passwords for those usernames.')
+    CreateToolTip(new_entry_button, 'Opens a new window for new entries. Needs URL, username, and password.')
+    CreateToolTip(refresh_button, 'Refreshes website list above.')
+    CreateToolTip(version_button, 'Opens up recent version log.')

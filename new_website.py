@@ -9,6 +9,7 @@ def save_click(window, website, username, password):
     VALUES ('""" + website + """', '""" + username + """', '""" + password + """');""")
     conn.commit()
     messagebox.showinfo('Save', 'Username / Password Saved!', parent=window)
+    window.destroy()
 
 
 
@@ -41,4 +42,7 @@ def initialize(window):
     username_entry.pack()
     password.pack()
     password_entry.pack()
-    save_button.pack()
+    save_button.pack(pady=15)
+
+    # Tooltips
+    CreateToolTip(save_button, 'Saves the entry into the database.')

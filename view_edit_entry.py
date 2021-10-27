@@ -26,6 +26,7 @@ def initialize(window, website):
         DELETE FROM data WHERE url = '""" + entry[0] + """' 
         AND username = '""" + entry[1] + """'""")
         conn.commit()
+        window.destroy()
 
     def copy_username():
         """
@@ -92,8 +93,14 @@ def initialize(window, website):
     username_dropdown.grid(row=1, column=0)
     copy_username_button.grid(row=1, column=1)
     password.grid(row=2, column=0)
-    password_entry.grid(row=3, column=0)
-    copy_password_button.grid(row=3, column=1)
+    password_entry.grid(row=3, column=0, padx=(20, 10))
+    copy_password_button.grid(row=3, column=1, padx=10)
     update_button.grid(row=4, column=0)
     delete_button.grid(row=4, column=1)
     website_label.grid(row=5, column=0, columnspan=2, sticky=S)
+
+    # Tooltips
+    CreateToolTip(copy_username_button, 'Copies the username.')
+    CreateToolTip(copy_password_button, 'Copies the password.')
+    CreateToolTip(update_button, 'Updates the password with whatever is written in the box.')
+    CreateToolTip(delete_button, 'Deletes the entry from the database.')
