@@ -9,7 +9,7 @@ WIDTH = 250
 conn = sqlite3.connect('passwords.db')
 c = conn.cursor()
 
-# Tooltip code found on stackoverflow:
+# Tooltip code found on stackoverflow: https://stackoverflow.com/questions/3221956/how-do-i-display-tooltips-in-tkinter
 class CreateToolTip(object):
     """
     create a tooltip for a given widget
