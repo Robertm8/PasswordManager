@@ -45,4 +45,4 @@ def initialize(window):
     save_button.pack(pady=15)
 
     # Tooltips
-    CreateToolTip(save_button, 'Saves the entry into the database.')
+    ToolTip(save_button, msg='Saves the entry into the database.', delay=0.5)

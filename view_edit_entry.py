@@ -100,7 +100,7 @@ def initialize(window, website):
     website_label.grid(row=5, column=0, columnspan=2, sticky=S)
 
     # Tooltips
-    CreateToolTip(copy_username_button, 'Copies the username.')
-    CreateToolTip(copy_password_button, 'Copies the password.')
-    CreateToolTip(update_button, 'Updates the password with whatever is written in the box.')
-    CreateToolTip(delete_button, 'Deletes the entry from the database.')
+    ToolTip(copy_username_button, msg='Copies the username.', delay=0.5)
+    ToolTip(copy_password_button, msg='Copies the password.', delay=0.5)
+    ToolTip(update_button, msg='Updates the password with whatever is written in the box.', delay=0.5)
+    ToolTip(delete_button, msg='Deletes the entry from the database.', delay=0.5)

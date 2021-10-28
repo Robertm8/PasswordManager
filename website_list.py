@@ -85,8 +85,8 @@ def initialize(root):
     version_button.grid(row=3, column=3)
 
     # Tooltips
-    CreateToolTip(view_edit_button, 'Opens a new window to allow for viewing the usernames associated with the '
-                                    'website, and to copy/edit the passwords for those usernames.')
-    CreateToolTip(new_entry_button, 'Opens a new window for new entries. Needs URL, username, and password.')
-    CreateToolTip(refresh_button, 'Refreshes website list above.')
-    CreateToolTip(version_button, 'Opens up recent version log.')
+    ToolTip(view_edit_button, msg='Opens a new window to allow for viewing the usernames associated with the '
+                                    'website, and to copy/edit the passwords for those usernames.', delay=0.5)
+    ToolTip(new_entry_button, msg='Opens a new window for new entries. Needs URL, username, and password.', delay=0.5)
+    ToolTip(refresh_button, msg='Refreshes website list above.', delay=0.5)
+    ToolTip(version_button, msg='Opens up recent version log.', delay=0.5)
