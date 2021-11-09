@@ -7,8 +7,9 @@ def initialize(window):
     :return: None
     """
     # Label definitions
-    version = Label(window, text='Version Info: 1.0')
-    updates = Label(window, text='Latest Update: \n Added database. \n Cleaned up aesthetics.')
+    version = Label(window, text='Version Info: 2.0')
+    updates = Label(window, text='Latest Update: \n Added encryption / decryption. \n Update password \n'
+                                 'currently unavailable.')
 
     # Draw elements to window
     version.pack()

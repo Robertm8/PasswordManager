@@ -19,6 +19,6 @@ c = conn.cursor()
 # url text,
 # username text,
 # password text,
-# key text
+# uid text
 # )
 # """)
