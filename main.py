@@ -1,11 +1,12 @@
 from settings import *
-import website_list
+# import website_list
+import login
 
 root = Tk()
 root.title(TITLE)
-root.geometry(str(LENGTH)+'x'+str(WIDTH))
+root.geometry('200x200')
 root.resizable(False, False)
 
-website_list.initialize(root)
+login.initialize(root)
 
 root.mainloop()
