@@ -3,12 +3,25 @@ import website_list
 import hashlib
 
 def create_new_window():
+    """
+    Opens the next window which is the website_list.
+    :return: None
+    """
     new_window = Toplevel()
     new_window.protocol("WM_DELETE_WINDOW", exit)  # exits the program if later window is closed
     new_window.geometry('250x250')
     website_list.initialize(new_window)
 
 def check_credentials(username, password, parent):
+    """
+    Verifies credentials of user by checking encrypted username and password against a stored encrypted
+    value located in 'credentials.txt'. This uses SHA256 1-way encryption. If successful, calls
+    create_new_window and removes this window from view.
+    :param username: string
+    :param password: string
+    :param parent: window calling this function (login screen)
+    :return: None
+    """
     username_byte = bytes(username, encoding='ASCII')
     password_byte = bytes(password, encoding='ASCII')
     encrypt_username = hashlib.sha256(username_byte).hexdigest()
@@ -17,7 +30,6 @@ def check_credentials(username, password, parent):
     with open('credentials.txt', 'r') as infile:
         for line in infile:
             credentials.append(line.strip())
-    print(credentials)
     if encrypt_username != credentials[0] or encrypt_password != credentials[1]:
         return False
     create_new_window()

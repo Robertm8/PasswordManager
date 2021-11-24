@@ -4,8 +4,13 @@ import view_edit_entry
 import version
 
 def create_new_window(window, website=None):
+    """
+    Creates a new window based on the button clicked.
+    :param window: string, given by the button being clicked
+    :param website: string, given by the website selected from the list of websites
+    :return: None
+    """
     if window == 'new':
-        print(website)
         new_window = Toplevel()
         new_window.geometry('200x200')
         new_website.initialize(new_window)
@@ -20,8 +25,11 @@ def create_new_window(window, website=None):
         new_window.geometry('200x200')
         version.initialize(new_window)
 
-
 def fetch_data():
+    """
+    Queries the database for all URLs and groups them by URL.
+    :return: List of URLs
+    """
     c.execute("SELECT url FROM data GROUP BY url")
     results = c.fetchall()
     return [url[0] for url in results]
@@ -59,7 +67,6 @@ def initialize(root):
         for website in results:
             website_list.insert(END, website)
         website_list.grid(row=1, column=0)
-        print(records)
 
     # Button definitions
     view_edit_button = Button(root, text='View/Edit', command=lambda: create_new_window('edit', website_list.get(ANCHOR)))

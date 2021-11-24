@@ -6,7 +6,6 @@ def translate_results(results):
     :param results: encrypted list with a tuple of url / username / password for each username
     :return: decrypted list with a tuple of url / username / password for each username
     """
-    print(results)
 
     decrypted_results = []
 
@@ -36,10 +35,6 @@ def translate_results(results):
 
     return decrypted_results
 
-# Will possibly be used for update password, currently unavailable
-# def fetch_updated_info(username, password):
-#     return
-
 def initialize(window, website):
     """
     Sets up main window elements.
@@ -50,7 +45,6 @@ def initialize(window, website):
     c.execute("SELECT url, username, password, uid FROM data where url = '" + website + "'")
     results = c.fetchall()
     decrypted_results = translate_results(results)
-    print(decrypted_results)
 
     # Nested functions
     def delete_click():
@@ -97,16 +91,6 @@ def initialize(window, website):
                 password_entry.insert(0, element[2])
                 break
 
-    # Update password feature currently unavailable
-    # def update_password():
-    #     selected = clicked.get()
-    #     new_password = password_entry.get()
-    #     # old_uid, new_uid, e_username, e_password = fetch_updated_info(selected, new_password)
-    #     print(new_password)
-    #     c.execute("""UPDATE data SET password = '""" + new_password + """'
-    #     WHERE url = '""" + website +"""' AND username = '""" + selected + """'""")
-    #     conn.commit()
-
     # Label definitions
     username = Label(window, text='Username:')
     password = Label(window, text='Password:')
@@ -119,15 +103,12 @@ def initialize(window, website):
 
     # Input definitions
     password_entry = Entry(window)
-    # password_entry.insert(0, clicked)
 
     # Button definition
     copy_username_button = Button(window, text='Copy', command=copy_username)
     copy_password_button = Button(window, text='Copy', command=copy_password)
     # update_button = Button(window, text='Update', command=update_password)  # currently unavailable
     delete_button = Button(window, text='Delete', command=delete_click)
-
-    # Configs
 
     # Draw elements to window
     username.grid(row=0, column=0)
@@ -136,12 +117,10 @@ def initialize(window, website):
     password.grid(row=2, column=0)
     password_entry.grid(row=3, column=0, padx=(20, 10))
     copy_password_button.grid(row=3, column=1, padx=10)
-    # update_button.grid(row=4, column=0)  # currently unavailable
     delete_button.grid(row=4, column=1)
     website_label.grid(row=5, column=0, columnspan=2, sticky=S)
 
     # Tooltips
     ToolTip(copy_username_button, msg='Copies the username.', delay=0.5)
     ToolTip(copy_password_button, msg='Copies the password.', delay=0.5)
-    # ToolTip(update_button, msg='Updates the password with whatever is written in the box.', delay=0.5)  # currently unavailable
     ToolTip(delete_button, msg='Deletes the entry from the database.', delay=0.5)

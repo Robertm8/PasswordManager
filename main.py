@@ -1,5 +1,6 @@
+# Main file for program. Run this.
+
 from settings import *
-# import website_list
 import login
 
 root = Tk()

@@ -2,7 +2,8 @@ from settings import *
 
 def save_click(window, website, username, password):
     """
-    What happens when you click the save button.
+    Saves website to database. Does this by calling an encryption microservice which will return encryption
+    data which is stored in the database.
     :return: None
     """
 
@@ -21,7 +22,7 @@ def save_click(window, website, username, password):
         e_password = u_p_data['password']
         uid = u_p_data['uid']
 
-    # Remove files after finishing with them
+    # Remove file after finishing with it
     os.remove(RESULTS_FILENAME)
 
     # Save encrypted data to database
@@ -30,8 +31,6 @@ def save_click(window, website, username, password):
     conn.commit()
     messagebox.showinfo('Save', 'Username / Password Saved!', parent=window)
     window.destroy()
-    print(u_p_data)
-
 
 def initialize(window):
     """
@@ -52,8 +51,6 @@ def initialize(window):
     # Button definition
     save_button = Button(window, text='Save', command=lambda: save_click(window, website_entry.get(),
                                                                          username_entry.get(), password_entry.get()))
-
-    # Configs
 
     # Draw elements to window
     website.pack()
