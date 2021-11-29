@@ -1,0 +1,2 @@
+cryptography==3.4.7
+tkinter_tooltip==1.1.2
