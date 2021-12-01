@@ -2,6 +2,7 @@ from settings import *
 import website_list
 import hashlib
 
+
 def create_new_window():
     """
     Opens the next window which is the website_list.
@@ -11,6 +12,7 @@ def create_new_window():
     new_window.protocol("WM_DELETE_WINDOW", exit)  # exits the program if later window is closed
     new_window.geometry('250x250')
     website_list.initialize(new_window)
+
 
 def check_credentials(username, password, parent):
     """
@@ -35,27 +37,79 @@ def check_credentials(username, password, parent):
     create_new_window()
     parent.withdraw()
 
+
 def initialize(root):
     """
-    Sets up main window elements.
+    Manager function that calls helper functions to define elements and then draw elements.
     :param root: master frame
     :return: None
     """
 
-    # Label definitions
-    header_label = Label(root, text="Matt's Password Manager")
-    username_label = Label(root, text='Username:')
-    password_label = Label(root, text='Password:')
+    elements = element_definitions(root)
+    draw_elements(elements)
 
-    # Input definitions
-    username_entry = Entry(root)
-    password_entry = Entry(root)
 
-    # Button definitions
-    login_button = Button(root, text='Log In', command=lambda: check_credentials(username_entry.get(),
-                                                                                 password_entry.get(), root))
+def element_definitions(window):
+    """
+    Manager for element definitions.
+    :param window: the screen where the elements will exist
+    :return: tuple of element groups
+    """
+    labels = label_definitions(window)
+    entries = entry_definitions(window)
+    button = button_definitions(window, entries)
+    return labels, entries, button
 
-    # Draw elements to root
+
+def label_definitions(window):
+    """
+    Creates the text on the screen.
+    :param window: the screen where the text will exist
+    :return: tuple of text labels
+    """
+    header = Label(window, text="Matt's Password Manager")
+    username = Label(window, text='Username:')
+    password = Label(window, text='Password:')
+    return header, username, password
+
+
+def button_definitions(window, entries):
+    """
+    Creates the login button.
+    :param window: the screen where the button will exist
+    :param entries: tuple of entry fields that the button interacts with
+    :return: login button variable
+    """
+    username_entry, password_entry = entries
+    login_button = Button(window, text='Log In', command=lambda: check_credentials(username_entry.get(),
+                                                                                   password_entry.get(), window))
+    return login_button
+
+
+def entry_definitions(window):
+    """
+    Creates the entry fields on the screen.
+    :param window: the screen where the entry fields will exist
+    :return: tuple of the entry fields
+    """
+    username = Entry(window)
+    password = Entry(window)
+    return username, password
+
+
+def draw_elements(elements):
+    """
+    Takes a tuple of element groups and draws them to the screen.
+    :param elements: tuple containing group of elements. The group of elements may also be a tuple.
+    :return:
+    """
+
+    # Unpack elements
+    labels, entries, login_button = elements
+    header_label, username_label, password_label = labels
+    username_entry, password_entry = entries
+
+    # Draw elements
     header_label.pack(pady=20)
     username_label.pack()
     username_entry.pack()

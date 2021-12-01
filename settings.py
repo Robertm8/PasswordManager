@@ -13,13 +13,3 @@ WIDTH = 250
 
 conn = sqlite3.connect('passwords.db')
 c = conn.cursor()
-
-# Just a reference for the code used to set up the database structure.
-# c.execute("""
-# CREATE TABLE data (
-# url text,
-# username text,
-# password text,
-# uid text
-# )
-# """)

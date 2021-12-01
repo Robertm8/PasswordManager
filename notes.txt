@@ -1,3 +1,13 @@
+# Just a reference for the code used to set up the database structure.
+# c.execute("""
+# CREATE TABLE data (
+# url text,
+# username text,
+# password text,
+# uid text
+# )
+# """)
+
 Helpful things to remember
 
 If wanting to quit with function call instead of X button, use root.quit()
