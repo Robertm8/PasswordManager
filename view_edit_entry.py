@@ -3,7 +3,7 @@ from settings import *
 
 def fetch_data(website):
     """
-    Runs query to database and unencrypts the data.
+    Runs query to database and decrypts the data.
     :param website: website that was selected
     :return: decrypted results
     """
@@ -27,10 +27,10 @@ def translate_results(results):
         subprocess.run(['python', '-m', 'crypto-service', '-d', '-uid', username_pass[3],
                         '-u', username_pass[1], '-p', username_pass[2]])
         sleep(0.05)  # to give enough time for microservice to respond
-        RESULTS_FILENAME = 'crypto-service-results.json'
+        results_filename = 'crypto-service-results.json'
 
         # Locate file created
-        path_to_results = os.path.join('.\\', RESULTS_FILENAME)
+        path_to_results = os.path.join('.\\', results_filename)
 
         # Load data from file into variables
         with open(path_to_results, 'r') as file:
@@ -114,6 +114,7 @@ def initialize(window, website):
     """
     Manager function that calls helper functions to define elements and then draw elements.
     :param window: the window popup
+    :param website: the website being viewed
     :return: None
     """
     elements = element_definitions(window, website)
@@ -125,6 +126,7 @@ def element_definitions(window, website):
     """
     Manager for element definitions.
     :param window: the screen where the elements will exist
+    :param website: the website being viewed
     :return: tuple of element groups
     """
     clicked = StringVar()
@@ -227,9 +229,9 @@ def create_tooltips(elements):
     """
     # Unpack buttons
     buttons = elements[3]
-    copy_username, copy_password, delete = buttons
+    copy_username_button, copy_password_button, delete_button = buttons
 
     # Create tooltips
-    ToolTip(copy_username, msg='Copies the username.', delay=0.5)
-    ToolTip(copy_password, msg='Copies the password.', delay=0.5)
-    ToolTip(delete, msg='Deletes the entry from the database.', delay=0.5)
+    ToolTip(copy_username_button, msg='Copies the username.', delay=0.5)
+    ToolTip(copy_password_button, msg='Copies the password.', delay=0.5)
+    ToolTip(delete_button, msg='Deletes the entry from the database.', delay=0.5)

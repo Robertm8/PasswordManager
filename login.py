@@ -47,6 +47,7 @@ def initialize(root):
 
     elements = element_definitions(root)
     draw_elements(elements)
+    create_tooltip(elements)
 
 
 def element_definitions(window):
@@ -57,7 +58,7 @@ def element_definitions(window):
     """
     labels = label_definitions(window)
     entries = entry_definitions(window)
-    button = button_definitions(window, entries)
+    button = button_definition(window, entries)
     return labels, entries, button
 
 
@@ -73,19 +74,6 @@ def label_definitions(window):
     return header, username, password
 
 
-def button_definitions(window, entries):
-    """
-    Creates the login button.
-    :param window: the screen where the button will exist
-    :param entries: tuple of entry fields that the button interacts with
-    :return: login button variable
-    """
-    username_entry, password_entry = entries
-    login_button = Button(window, text='Log In', command=lambda: check_credentials(username_entry.get(),
-                                                                                   password_entry.get(), window))
-    return login_button
-
-
 def entry_definitions(window):
     """
     Creates the entry fields on the screen.
@@ -95,6 +83,19 @@ def entry_definitions(window):
     username = Entry(window)
     password = Entry(window)
     return username, password
+
+
+def button_definition(window, entries):
+    """
+    Creates the login button.
+    :param window: the screen where the button will exist
+    :param entries: tuple of entry fields that the button interacts with
+    :return: login button element
+    """
+    username_entry, password_entry = entries
+    login_button = Button(window, text='Log In', command=lambda: check_credentials(username_entry.get(),
+                                                                                   password_entry.get(), window))
+    return login_button
 
 
 def draw_elements(elements):
@@ -116,3 +117,13 @@ def draw_elements(elements):
     password_label.pack()
     password_entry.pack()
     login_button.pack(pady=20)
+
+
+def create_tooltip(elements):
+    """
+    Creates tooltips for the different buttons on the screen.
+    :param elements: package of elements that buttons are stored in
+    :return: None
+    """
+    login_button = elements[2]
+    ToolTip(login_button, msg='Logs into user account.', delay=0.5)

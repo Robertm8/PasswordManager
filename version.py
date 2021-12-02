@@ -1,5 +1,6 @@
 from settings import *
 
+
 def initialize(window):
     """
     Sets up main window elements.
